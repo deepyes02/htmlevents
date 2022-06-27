@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DOM Traversal</title>
+</head>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	ul {
+		margin: auto 30px;
+	}
+
+	.flex {
+		padding: 10px;
+	}
+
+	.hobbies {
+		display: none;
+	}
+
+	::marker {
+		color: green;
+		content: '✔  ';
+	}
+
+	.interests {
+		display: none;
+	}
+
+	.interests:hover ::marker {
+		color: red;
+	}
+</style>
+
+<body>
+	<div class="flex">
+		<ul class="hobbies">
+			<li>Playing Guitar</li>
+			<li>Computer Engineering</li>
+			<li>Software Engineering</li>
+			<li>Exercise</li>
+		</ul>
+		<ul class="interests" aria-label="interests">
+			<h3 class="first_element" aria-label="first_element">Interests</h3>
+			<li class="second_element" aria-label="second_element">Javascript</li>
+			<li class="third_element" aria-label="third_element">PHP</li>
+			<li class="fourth_element" aria-label="fourth_element">CSS</li>
+			<li class="fifth_element" aria-label="fifth_element">HTML</li>
+		</ul>
+		<div class="book__outer">
+			<ul class="books" aria-label="books">
+				<h3 id="child_1" class="child_1" aria-label="book_1">child_1 - Books</h3>
+				<li id="child_2" class="child_2" aria-label="book_2">child_2 - Slaugherhouse-5</li>
+				<li id="child_3" class="child_3" aria-label="book_3">child_3 - सेताे धर्ती</li>
+				<li id="child_4" class="child_4" aria-label="book_4">child_4 - Robinson Crusoe</li>
+				<li id="child_5" class="child_5" aria-label="book_5">child_5 - The Path</li>
+			</ul>
+		</div>
+	</div>
+	<script>
+		function appendChildHobbies(tag = 'h2', text = 'hello world', color = 'black') {
+			let parent_div = document.querySelector('.hobbies');
+			parent_div.style.display = 'block';
+			let list_item = document.createElement(tag);
+			list_item.style.color = color;
+			list_item.innerText = text
+
+			if (parent_div.appendChild(list_item)) {
+				parent_div.append(list_item)
+			}
+		}
+		// appendChildHobbies('li', 'Javascript Added me here', 'blue');
+		function childSelector() {
+			const interests = document.querySelector('.interests');
+			interests.style.display = 'block';
+			if (interests && interests.children.length === 0) {
+				console.log("no children"); return;
+			}
+			interests_children = interests.children;
+
+			for (let i = 0; i < interests_children.length; i++) {
+				interests_children[i].textContent += ' is here to stay';
+			}
+			interests.lastElementChild.textContent += ' for longer.';
+
+			interests.lastElementChild.textContent = interests.lastElementChild.textContent.replace(/^HTML/gi, 'React')
+		};
+		// childSelector();
+
+		//same level traverse
+		//child_1 upto 5 - id
+
+		const child_1 = document.getElementById('child_1');
+
+		console.log(child_1.parentElement.parentElement.style.background="green");
+
+
+	</script>
+</body>
+
+</html>

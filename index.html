@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<!-- <body onbeforeprint="func_afterPrint()" onbeforeunload="return on_unload_func()" onresize="resize_func()"> -->
+<body onunload="unload_func()">
+	<h2>After print</h2>
+	<a href="https://facebook.com" title="Facebook">External Link</a>
+
+	<script>
+		function unload_func(){
+			alert("Thank you for visiting W3Schools!");
+		}
+		function resize_func(){
+			console.log("window is resized");
+		}
+
+
+		function func_afterPrint() {
+			const confirmation = confirm("Are you sure you want to print")
+			if (!confirmation) {
+				return window.location.reload();
+			}
+		}
+
+		function on_unload_func() {
+			return "Are you sure you want to leave this page?";
+		}
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Form Events</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		::selection {
+			color: white;
+			background: black;
+		}
+
+		.section-title {
+			padding: 8px;
+			color: white;
+			text-align: center;
+			background: rgb(32, 32, 29);
+		}
+
+		.form {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			background: rgba(231, 232, 201, 0.71);
+			padding: 20px 10px;
+		}
+
+		.text-form {
+			display: flex;
+			flex-wrap: wrap;
+			min-width: 400px;
+			width: 78%;
+			background: rgba(28, 31, 28, 0.678);
+			padding: 10px;
+			border-radius: 0px 14px 0 14px;
+			justify-content: space-between;
+			align-self: center;
+		}
+
+		.text-form label,
+		.text-form p {
+			color: white;
+		}
+
+		.text-form label {
+			width: 30%;
+		}
+
+		.text-form input {
+			width: 70%;
+			padding: 3px;
+			border-radius: 0px 14px 0px 14px;
+		}
+
+		.standard-button {
+			text-decoration: none;
+			color: white;
+			border: none;
+			background: green;
+			padding: 10px;
+			border-radius: 14px 0 14px 0;
+			font-size: 14px;
+			letter-spacing: 0.9px;
+			cursor: pointer;
+			transition: color 0.4s;
+			transition: background 0.4s;
+		}
+
+		.standard-button:hover {
+			background: rgb(72, 12, 12);
+			color: white;
+		}
+
+		.standard-button:active {
+			color: green;
+			background: white;
+			text-decoration: underline;
+		}
+
+		.button-form {
+			align-self: center;
+		}
+	</style>
+</head>
+
+<body onload="onload_func()">
+	<h2 class="section-title">Form Events</h2>
+	<form class="form">
+		<div class="text-form">
+			<label for="lname">Last Name (onblur)</label>
+			<input class="text_input" type="text" name="lname" id="lname">
+		</div>
+		<div class="text-form">
+			<label for="fname">First Name (onblur)</label>
+			<input class="text_input" type="text" name="fname" id="fname">
+		</div>
+		<div class="text-form">
+			<label for="Address">Address (on change)</label>
+			<input type="text" name="address" id="address" onchange="onchange_func(this.value)">
+			<p style="margin-top:5px;" id="output"></p>
+		</div>
+		<div class="button-form">
+			<input class="standard-button" type="reset" value="Reset this form" />
+			<input id="submit" class="standard-button" type="submit" value="Submit this form" />
+		</div>
+	</form>
+
+	<script>
+		function onload_func() {
+			let text_inputs = document.querySelectorAll('.text_input');
+			text_inputs.forEach(text_input => {
+				text_input.addEventListener('blur', () => {
+					text_input.value = text_input.value.toUpperCase();
+					text_input.style.backgroundColor = "white";
+					text_input.style.color = "rgba(28, 31, 28, 0.678)";
+				})
+				text_input.addEventListener('focus', () => {
+					text_input.style.backgroundColor = "rgba(28, 31, 28, 0.678)";
+					text_input.style.color = "white";
+				})
+			})
+		}
+		function onchange_func(value) {
+			if (value) {
+				document.querySelector('#output').style.display = "block";
+				document.querySelector('#output').innerHTML = 'You typed: ' + value;
+			} else {
+				document.querySelector('#output').style.display = "none";
+			}
+		}
+		function action_on_submit() {
+			document.querySelector('#submit').addEventListener('click', (e) => {
+				e.preventDefault();
+				const lname = document.getElementById('lname');
+				const fname = document.getElementById('fname');
+				const address = document.getElementById('address');
+
+				const input_fields = [lname, fname, address];
+				const input_validation = (arr) => {
+					arr.forEach(input_field => {
+						if (!input_field.value) {
+							const parent = input_field.parentNode;
+							if (parent.querySelector('.validity')) {
+								let child_element_to_delete = parent.querySelector('.validity');
+								parent.removeChild(child_element_to_delete);
+							}
+							const paragraph = document.createElement('p')
+							paragraph.classList.add('validity')
+							paragraph.style.color = "#ffea10";
+							paragraph.innerHTML = "Please provide valid input";
+							parent.append(paragraph)
+						} else {
+							const parent = input_field.parentNode;
+							if (parent.querySelector('.validity')) {
+								let child_element_to_delete = parent.querySelector('.validity');
+								parent.removeChild(child_element_to_delete);
+							}
+						}
+					});
+				}
+				input_validation(input_fields);
+			})
+		}
+		action_on_submit();
+	</script>
+</body>
+
+</html>
